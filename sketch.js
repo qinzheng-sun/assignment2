@@ -11,6 +11,8 @@ let blueVal;
 
 let you;
 
+let moodValue = 1; 
+
 function setup() {
 
     createCanvas(windowWidth, windowHeight);
@@ -38,6 +40,17 @@ function setup() {
     submitButton.position(windowWidth/3, 810);
     submitButton.style('font-size', '30px');
     
+    mood1 = select('#button1');
+    mood2 = select('#button2');
+    mood3 = select('#button3');
+    mood4 = select('#button4');
+    mood5 = select('#button5');
+    mood6 = select('#button6');
+    mood7 = select('#button7');
+    mood8 = select('#button8');
+    mood9 = select('#button9');
+    mood10 = select('#button10');
+
   
   }
   
@@ -65,12 +78,18 @@ function draw() {
   text("Blue", windowWidth/3, 680);
 
   redVal = sliderRed.value();
-  blueVal = sliderBlue.value();
   greenVal = sliderGreen.value();
+  blueVal = sliderBlue.value();
+
 
   // on submit enter the information
   submitButton.mousePressed(sendTheMessage);
+}
 
+function setMoodValue(val) {
+
+moodValue = val;
+console.log("moodValue = "+ moodValue);
 }
  
 function sendTheMessage() {
@@ -81,7 +100,7 @@ function sendTheMessage() {
     // if they did, save their name to the variable "you"
     you = nameInput.value();
     // load a new page when you press submit
-    window.location.href = "https://qinzheng-sun.github.io/_pageTwo/index.html?you="+you+"&r="+redVal+"&g="+greenVal+"&b="+blueVal; 
+    window.location.href = "/../_pageTwo/index.html?you="+you+"&r="+redVal+"&g="+greenVal+"&b="+blueVal+"&moodValue="+moodValue; 
 
   } else {
     // if they have no entered their name, create an alert and ask them to enter their name
