@@ -7,7 +7,7 @@ var y;
 var r;
 var g;
 var b;
-var who; 
+var who;  
 
 let channelName = "clickCircles";
 
@@ -17,13 +17,14 @@ var you = url.searchParams.get("you");
 var redVal = url.searchParams.get("r");
 var greenVal = url.searchParams.get("g");
 var blueVal = url.searchParams.get("b");
-var moodValue = url.searchParams.get("slider");
+var moodValue = url.searchParams.get("moodValue");
 
 // printing out the values so that we know what is going on. 
 console.log(you);
 console.log(redVal);
 console.log(greenVal);
 console.log(blueVal);
+console.log(moodValue)
 
 createServer(you); // creating our pubnub server with our name.
 
@@ -37,8 +38,6 @@ function setup() {
 
     // create a new JSON object to store the mouse position, colours, and name of the user from the previous page
     new allCursors(mouseX, mouseY, redVal, greenVal, blueVal, you);
-
-    
   
   }
   
@@ -51,13 +50,11 @@ function draw() {
   for (let i = 0; i < cursors.length; i++) { // loop through all the cursors and show them on the page
     noStroke(0);
     fill(cursors[i].r,cursors[i].g,cursors[i].b)
-    ellipse(cursors[i].x, cursors[i].y, moodValue * 20, moodeValue * 20);
+    ellipse(cursors[i].x, cursors[i].y, moodValue * 20, moodValue * 20);
     textSize(20);
     textAlign(CENTER);
     fill(255-cursors[i].r,255-cursors[i].g,255-cursors[i].b); // make the text colour different
     text(cursors[i].who, cursors[i].x, cursors[i].y+5);
-
-    
   
   }
 }
@@ -73,10 +70,9 @@ function sendTheMessage() {
       y: mouseY,
       r: redVal, 
       g: greenVal,
-      b: blueVal,
+      b: blueVal
     },
-
-})
+  });
 }
 
 function readIncoming(inMessage) {
@@ -93,7 +89,6 @@ function readIncoming(inMessage) {
    r = inMessage.message.r; // get the red value from the other people
    g = inMessage.message.g; // get the green value from the other people
    b = inMessage.message.b; // get the blue value from the other people
-   moodValue = inMessage.message.moodValue;
    who = inMessage.publisher; // who sent the message
 
   //console.log(inMessage); //logging for information
@@ -108,13 +103,11 @@ function readIncoming(inMessage) {
         }
       }
       if(newinput) { // if this is a new user, create a new JSON object that we add to our array
-        cursors.push(new allCursors(x,y,r,g,b,who,moodValue));
+        cursors.push(new allCursors(x,y,r,g,b,who));
       }
-      
-      
   }
 }
-function allCursors(x,y,r,g,b,who,moodValue){ // creates a new JSON object for us
+function allCursors(x,y,r,g,b,who){ // creates a new JSON object for us
  
   this.x = x; // this is shorthand for saying "this object"
   this.y = y;
@@ -122,6 +115,5 @@ function allCursors(x,y,r,g,b,who,moodValue){ // creates a new JSON object for u
   this.g = g;
   this.b = b;
   this.who = who;
-  this.moodValue = moodValue;
 
 }
